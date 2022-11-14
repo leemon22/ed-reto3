@@ -31,14 +31,14 @@ VectorPilas::VectorPilas(const vector<int> &tamanios) {
     // Creamos el vector de pilas
     int total = 0;
     for(int i : tamanios)
-        total += i + 1;
+        total += i;
     pilas.resize(total,0);
 
     // Creamos los vectores iteradores
     base.push_back(pilas.begin());
     for(int i : tamanios){
-        tope.push_back(base.back());
-        base.push_back(base.back() + i + 1);
+        tope.push_back(base.back() - 1);
+        base.push_back(base.back() + i);
     }
 }
 
@@ -58,10 +58,10 @@ bool VectorPilas::push(int i, int n) {
 
     assert(i >= 0 && i < size());
 
-    if(tope[i] == base[i+1])
+    if(tope[i] >= base[i+1] - 1)
         return false;
 
-    *(++tope[i]) = n;
+    *++tope[i] = n;
 
     return true;
 }
@@ -70,6 +70,6 @@ void VectorPilas::pop(int i) {
 
     assert(i >= 0 && i < size());
 
-    if(tope[i] != base[i])
+    if(tope[i] >= base[i])
         --tope[i];
 }

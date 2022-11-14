@@ -35,14 +35,16 @@ public:
 
     bool empty(int i) const{
         assert(i >= 0 && i < size());
-        return tope[i] == base[i];
+        return tope[i] < base[i];
     }
     int &top(int i){
         assert(i >= 0 && i < size());
+        assert(!empty(i));
         return *tope[i];
     }
     const int &top(int i) const{
         assert(i >= 0 && i < size());
+        assert(!empty(i));
         return *tope[i];
     }
 
