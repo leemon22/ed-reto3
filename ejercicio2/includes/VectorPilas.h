@@ -12,8 +12,6 @@ using namespace std;
  * Representa un vector con un número fijo de pilas.
  * Cada pila del vector tiene un tamaño fijo.
  *
- * \n Ejemplo de uso en: @include ../src/main.cpp
- *
  * @author Pedro Javier Pérez Jiménez
  * @author Pablo Reyes Sousa
  */
