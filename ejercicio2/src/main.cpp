@@ -11,16 +11,18 @@ int main() {
     VectorPilas pilas(tamanios);
 
     // Añado elementos
-    pilas.push(0,5);
-    pilas.push(0,4);
 
-    pilas.push(1,7);
-    pilas.push(1,3);
-    pilas.push(1,9);
+    cout << endl << "Añado elementos a las pilas:" << endl;
+    for(int i = 0; i < 9; ++i){
+        if(pilas.push(i%3,i))
+            cout << "Elemento " << i << " insertado en la pila " << i%3 << endl;
+        else
+            cout << "Elemento " << i << " no insertado en la pila " << i%3 << endl;
+    }
 
-    pilas.push(2,6);
 
     // Los saco
+    cout << endl << "Saco elementos de las pilas:";
     for(int i = 0; i < pilas.size(); ++i){
         cout << endl << "Pila " << i << ": ";
         while (!pilas.empty(i)){

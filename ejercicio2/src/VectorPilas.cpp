@@ -6,9 +6,6 @@ using namespace std;
 
 void VectorPilas::copiar(const VectorPilas &other) {
 
-    // Eliminamos los datos que tenemos
-    eliminar();
-
     // Copiamos la información del vector de pilas de other
     pilas = other.pilas;
 
@@ -30,9 +27,12 @@ VectorPilas::VectorPilas(const vector<int> &tamanios) {
 
     // Creamos el vector de pilas
     int total = 0;
-    for(int i : tamanios)
+    for(int i : tamanios){
+        assert(i > 0);
         total += i;
-    pilas.resize(total,0);
+    }
+
+    pilas.resize(total);        // En este caso sí que nos interesa un resize en vez de un reserve.
 
     // Creamos los vectores iteradores
     base.push_back(pilas.begin());
@@ -49,8 +49,11 @@ VectorPilas::VectorPilas(const VectorPilas &other) {
 }
 
 VectorPilas &VectorPilas::operator=(const VectorPilas &other) {
-    if(&other != this)
+    if(&other != this){
+        eliminar();
         copiar(other);
+    }
+
     return *this;
 }
 
@@ -58,10 +61,10 @@ bool VectorPilas::push(int i, int n) {
 
     assert(i >= 0 && i < size());
 
-    if(tope[i] >= base[i+1] - 1)
+    if(stack_size(i) == max_stack_size(i))  // Comprobamos si la pila está llena
         return false;
 
-    *++tope[i] = n;
+    *++tope[i] = n;                         // Si no está llena le añadimos un elemento
 
     return true;
 }
@@ -70,6 +73,6 @@ void VectorPilas::pop(int i) {
 
     assert(i >= 0 && i < size());
 
-    if(tope[i] >= base[i])
+    if(!empty(i))
         --tope[i];
 }

@@ -1,65 +1,92 @@
 #include <iostream>
-#include <stack>
 #include <list>
-
-#include <vector>
+#include <algorithm>
+#include <stack>
+#include <cassert>
 
 using namespace std;
 
-class Compare{
+/**
+ * @author Pedro Javier Pérez Jiménez
+ * @author Pablo Reyes Sousa
+ */
+
+/**
+ * @brief Functor que nos servirá para ordenar las pilas dependiendo de que su elemento en la posición superior
+ * sea menor o mayor.
+ */
+class LessStack {
 public:
-    bool operator()(const stack<int> & L1, const stack<int> & L2){
-        return L1.empty() ? true : L2.empty() ? false : L1.top() < L2.top();
+
+    /**
+     * @brief Sobrecarga del operador () para el functor.
+     * @param s1 Primera pila
+     * @param s2 Segunda pila
+     * @return True si el elemento al tope de la primera pila es menor que el de la segunda. False en caso contrario
+     * @pre Ninguna pila está vacía.
+     */
+    bool operator()(const stack<int>s1, const stack<int>s2) {
+
+        // Ordenamos las pilas por el primer elemento.
+        return s1.top() < s2.top();
     }
 };
 
-void Borrar(list<stack<int>> & L, int elemento){
+/**
+ * @brief Función que elimina el entero que se pase como parámetro del tope de las pilas de la lista que se le pase y las reordena de menor a mayor.
+ * @param L La lista de pilas
+ * @param elemento Entero a borrar del tope de las pilas.
+ */
+void Borrar(list<stack<int>> &L, int elemento) {
 
+    // Usamos un bucle para borrar los elementos coincidentes del tope de las pilas.
+    // Además, borramos las listas vacías.
     list<stack<int>>::iterator it = L.begin();
-    while( it != L.end()){
-        if(!it->empty())
-            if(it->top() == elemento)
-                it->pop();
+
+    while (it != L.end())
         if(it->empty())
             it = L.erase(it);
+        else if (it->top() == elemento)
+            if(it->size() == 1)
+                it = L.erase(it);
+            else{
+                it->pop();
+                ++it;
+            }
         else
             ++it;
-    }
 
-    L.sort(Compare());
+    // Por último, utilizamos el functor descrito anteriormente como método de ordenación de la lista de pilas.
+    L.sort(LessStack());
 }
 
 int main() {
+    // Datos del ejemplo que viene en el pdf.
+    list<stack<int>> lista;
+    stack<int> pilas[4];
+    pilas[0].push(1);
+    pilas[0].push(9);
+    pilas[0].push(2);
+    pilas[1].push(0);
+    pilas[1].push(1);
+    pilas[1].push(2);
+    pilas[2].push(2);
+    pilas[3].push(7);
+    pilas[3].push(10);
+    pilas[3].push(9);
+    pilas[3].push(3);
 
-    vector<vector<int>> entrada = {{2,9,1},
-                           {2,1,0},
-                           {2},
-                           {3,9,10,7},
-                           {4,2},
-                           {8,2}};
-    list<stack<int>> L;
-
-    for(int i = 0; i < entrada.size(); ++i){
-        L.emplace_back();
-        cout << "Pila " << i << ": ";
-        for(vector<int>::reverse_iterator it = entrada[i].rbegin(); it !=  entrada[i].rend(); ++it){
-            L.back().push(*it);
-            cout << L.back().top() << " ";
-        }
-        cout << endl;
+    // Se añade las pilas a la lista
+    for (int i = 0; i < 4; ++i) {
+        lista.push_back(pilas[i]);
     }
 
-    cout << endl << "Borrando y ordenando..." << endl;
-    Borrar(L,2);
+    // Función implementada
+    Borrar(lista, 2);
 
-    int i = 0;
-    for(list<stack<int>>::iterator it = L.begin(); it != L.end(); ++it, ++i){
-        cout << "Pila " << i << ": ";
-        while(!it->empty()){
-            cout << it->top() << " ";
-            it->pop();
-        }
-        cout << endl;
+    // Mostramos los elementos en el tope de las pilas ya ordenadas.
+    for (list<stack<int>>::iterator i = lista.begin(); i != lista.end(); ++i) {
+        if(!i->empty()) cout << i->top() << endl;
     }
 
     return 0;
