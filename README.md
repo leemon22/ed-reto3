@@ -1,11 +1,3 @@
-<style>
-img{
-  width: 50%;
-  margin: auto;
-  display: block;
-}
-</style>
-
 # RETO 3 - ESTRUCTURA DE DATOS
 
 ## Ejercicios
@@ -17,7 +9,9 @@ La cabecera de la función sería:
  ~~~
 void Borrar(list<stack<int> > & L, int elemento);
 ~~~
-![](img/ejercicio1_ejemplo.jpg)
+<p align="center">
+  <img src="img/ejercicio1_ejemplo.jpg"/>
+</p>
 
 [Código de  este ejercicio.](./ejercicio1/src/main.cpp)
 
@@ -26,7 +20,9 @@ void Borrar(list<stack<int> > & L, int elemento);
    en la figura siguiente (para el caso k=3). Implementa las funciones **push** y **pop** que
    insertan/borran un determinado entero en una de las pilas.
 
-![](img/ejercicio2_diagrama.jpg)
+<p align="center">
+  <img src="img/ejercicio2_diagrama.jpg"/>
+</p>
 
 Código de este ejercicio:
 1. Clase VectoPilas:
